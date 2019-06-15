@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Client</title>
+    <link rel="stylesheet" href="{% static "clients_crud/css/bootstrap.css" %}"/>
+    <link rel="stylesheet" href="{% static "clients_crud/css/bootstrap-theme.css" %}"/>
+    <link rel="stylesheet" href="{% static "clients_crud/css/style.css" %}"/>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<form action="" method="POST">
+    {% csrf_token %}
+    {% for field in client_form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            <div>{{ field }}</div>
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+    {% for field in address_form %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            <div>{{ field }}</div>
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endfor %}
+    <input class="button_1 btn btn-primary" type="submit" value="Submit">
+</form>
+<script src={% static 'clients_crud/js/bootstrap.js' %}></script>
+<script src={% static 'clients_crud/js/main.js' %}></script>
+</body>
+</html>

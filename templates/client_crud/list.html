@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clients List</title>
+    <link rel="stylesheet" href="{% static "clients_crud/css/bootstrap.css" %}"/>
+    <link rel="stylesheet" href="{% static "clients_crud/css/bootstrap-theme.css" %}"/>
+    <link rel="stylesheet" href="{% static "clients_crud/css/style.css" %}"/>
+</head>
+<body>
+<form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="flex-container">
+        <div class="form-group" style="width: 160px;">
+            <label for="exampleFormControlSelect1">Search by</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="filter_type">
+                <option>All Clients</option>
+                <option>Name</option>
+                <option>Email</option>
+                <option>Phone</option>
+                <option>Suburb</option>
+            </select>
+        </div>
+        <div class="form-group" style="width: 160px;">
+            <label for="exampleFormControlSelect1">Order by</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="order_type">
+                <option>Name</option>
+                <option>Email</option>
+                <option>Phone</option>
+                <option>Suburb</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group" id="field_name" style="float: left;margin-right: 13px;">
+        <label for="filter">Enter filter</label>
+        <input type="text" class="form-control" id="filter" name="filter">
+    </div>
+    <input type="submit" value="Submit" class="btn btn-primary" id="filter_submit">
+</form>
+<h3> Clients List</h3>
+{% if clients %}
+    <table class="table">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Contact Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Street Name</th>
+            <th scope="col">Suburb</th>
+            <th scope="col">Post Code</th>
+            <th scope="col">State</th>
+            <th scope="col"></th>
+        </tr>
+        {% for client in clients %}
+            <tr>
+                <td scope="row">{{ client.name }}</td>
+                <td>{{ client.contact_name }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.address.street_name }}</td>
+                <td>{{ client.address.suburb }}</td>
+                <td>{{ client.address.postcode }}</td>
+                <td>{{ client.address.state }}</td>
+                <td><a href="{% url 'client_update' client.id %}" class="btn btn-primary">Update</a></td>
+            </tr>
+        {% endfor %}
+
+    </table>
+{% else %}
+    <p style="margin-left: 5%;">Clients list empty</p>
+{% endif %}
+<a href="{% url 'client_create' %}" class="btn btn-primary" style="margin-left: 5%;width: 100px;">Create</a>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+<script src={% static 'clients_crud/js/bootstrap.js' %}></script>
+<script src={% static 'clients_crud/js/main.js' %}></script>
+</body>
+</html>
